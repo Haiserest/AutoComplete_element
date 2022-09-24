@@ -1,38 +1,128 @@
+::-webkit-scrollbar{
+  width: 1px;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: column;
 }
 
-.App-link {
-  color: #61dafb;
+.auto-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.autoComplete-container{
+  display: flex;
+  width: 100%;
+}
+
+.this-is-input-container{
+  display: flex;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.icon-input-container{
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  opacity: 0.5;
+}
+
+.icon-input-container.clear:hover{
+  opacity: 1;
+  cursor: pointer;
+}
+
+.icon-input-container span{
+  padding: 0;
+}
+
+.this-is-input-container:focus{
+  border: none;
+}
+
+input {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+  border: none;
+  height: 20px;
+  /* font-size: 12px; */
+}
+
+input:focus{
+  outline: none;
+}
+
+.pos-rel {
+  position: relative;
+  width: 100%;
+}
+
+.autoContainer {
+  position: absolute;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  /* left: 10px; */
+  top: 23px;
+  width: 100%;
+}
+
+.result-options{
+  width: 100%;
+  height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.result-options.search{
+  overflow-y: hidden;
+  height: auto;
+}
+
+.title-option{
+  display: flex;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  text-align: start; 
+}
+
+.search-options{
+  display: flex;
+  text-align: start;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px;
+}
+
+.option:hover{
+  cursor: pointer;
+  background-color: #F8F0EA;
+}
+
+.option,
+span {
+  padding-left: 10px;
+  font-size: 12px;
+  /* text-transform: capitalize; */
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+
+.flex-column {
+  flex-direction: column;
 }
