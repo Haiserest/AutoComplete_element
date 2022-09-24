@@ -5,22 +5,33 @@ import dataList from './mock';
 
 const AutoCompletes = ({ allowedClear, icon }) => {
   const [display, setDisplay] = useState(false);
+  const [letterBox, setLetterBox] = useState(false);
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState('')
   const [value, setValue] = useState('');
   const wrapperRef = useRef(null)
 
   useEffect(() => {
-    if(search.length > 0 && value !== search){
+    dropdownFunc();
+  }, [search]);
+
+  const dropdownFunc = () => {
+    setOptions([]);
+    if(search.length > 2 && value !== search){
+      setLetterBox(false);
       setDisplay(true);
-      setOptions([]);
       Object.values(dataList).forEach((val) => {
         if (val.name.toLowerCase().includes(search.toLowerCase()) || val.email.toLowerCase().includes(search.toLowerCase())){
           setOptions(prev => [...prev, { name: val.name, email: val.email}])
         }
       });
+    } else {
+      if (search.length > 0) {
+        setLetterBox(true);
+      }
+      setDisplay(false);
     }
-  }, [search]);
+  }
 
   useEffect(() => {
     window.addEventListener('mousedown', handleClickOutside)
@@ -33,6 +44,7 @@ const AutoCompletes = ({ allowedClear, icon }) => {
     const { current: wrap } = wrapperRef
     if (wrap && !wrap.contains(event.target)) {
       setDisplay(false)
+      setLetterBox(false);
     }
   }
 
@@ -48,6 +60,9 @@ const AutoCompletes = ({ allowedClear, icon }) => {
         <div className="this-is-input-container">
           <input
             id="auto"
+            onClick={()=>{
+              dropdownFunc();
+            }}
             placeholder="Type to search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
@@ -61,6 +76,13 @@ const AutoCompletes = ({ allowedClear, icon }) => {
           )}
           <div className='icon-input-container'>{icon}</div>
         </div>
+        {letterBox && (
+          <div className="autoContainer">
+            <div className="result-options search">
+              <span>Required 3 lettes</span>
+            </div>
+          </div>
+        )}
         {display && (
           <div className="autoContainer">
             <div className="title-option" style={{ marginTop: 5 }}>
@@ -76,22 +98,24 @@ const AutoCompletes = ({ allowedClear, icon }) => {
             </div>
             <hr style={{ width: '90%', opacity: 0.7 }} />
             <div className="title-option">Result</div>
-            <div className="result-options">
-              {options
-                .filter(({ name }) => name.indexOf(search.toLowerCase()) > -1)
-                .map((value, i) => {
-                  return (
-                    <div
-                      onClick={() => updatePokeDex(value.name)}
-                      className="option"
-                      key={i}
-                      tabIndex="0"
-                    >
-                      <span>{value.name}</span>
-                    </div>
-                  )
-                })}
-            </div>
+              {options.length ? (
+              <div className="result-options">
+                {options.map((value, i) => {
+                    return (
+                      <div
+                        onClick={() => updatePokeDex(value.name)}
+                        className="option"
+                        key={i}
+                        tabIndex="0"
+                      >
+                        <span>{value.name}</span>
+                      </div>
+                    )
+                  })}
+              </div>
+              ):(
+                <div className="result-options no-result">No Result</div>
+              )}
           </div>
         )}
       </div>
